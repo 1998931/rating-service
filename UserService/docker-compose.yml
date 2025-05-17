@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  serviceregistry:
+    image: springboot/serviceregistry:latest
+    container_name: serviceregistry
+    ports:
+      - "8761:8761"
+
+  userservice:
+    image: userservice:latest
+    container_name: userservice
+    ports:
+      - "8085:8085"
+    depends_on:
+      - serviceregistry
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://serviceregistry:8761/eureka

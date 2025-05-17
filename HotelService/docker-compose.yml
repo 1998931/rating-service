@@ -1,0 +1,16 @@
+services:
+  serviceregistry:
+    image: springboot/serviceregistry:latest
+    container_name: serviceregistry
+    ports:
+      - "8761:8761"
+
+  hotelservice:
+    image: hotelservice:latest
+    container_name: hotelservice
+    ports:
+      - "8081:8081"
+    depends_on:
+      - serviceregistry
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://serviceregistry:8761/eureka

@@ -1,0 +1,52 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: hotelservice
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/microservices
+    username: root
+    password: 1998
+    driver-class-name: com.mysql.cj.jdbc.Driver
+ 
+  config:
+    import: optional:optional:configserver:http://localhost:8086
+
+  jpa:
+    hibernate:
+      ddl-auto: update  
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # exposes all actuator endpoints
+  endpoint:
+    health:
+      show-details: always
+    shutdown:
+      enabled: true
+
+info:
+  application:
+    name: "hotelservice"
+    description: "This is a hotel service" 
+    version: "1.0"
+# eureka:
+#   client:
+#     service-url:
+#       defaultZone: http://localhost:8761/eureka/
+#     register-with-eureka: true
+#     fetch-registry: true
+
+#   instance:
+#     prefer-ip-address: true
+#     hostname: localhost
+
+

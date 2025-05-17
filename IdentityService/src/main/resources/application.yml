@@ -1,0 +1,38 @@
+spring:
+  application: 
+    name: IDENTITY-SERVICE
+  datasource:
+    url: jdbc:mysql://localhost:3306/microservices
+    username: root
+    password: 1998
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    
+config:
+  import: optional:configserver:http://localhost:8086
+
+endpoints:
+    web:
+      exposure:
+        include: "*"  # 👈 You can include more if needed (e.g., metrics, beans)
+    info: 
+      env: 
+      enabled: true
+    shutdown:
+    enabled: true
+
+info:
+  application:
+    name: "userservice"
+    description: "This is a user service" 
+    version: "1.0" 
+  endpoint:
+    health:
+      show-details: always     
+server:
+  port: 9091

@@ -1,0 +1,64 @@
+spring:
+  application:
+    name: userservice 
+  datasource:
+    url: jdbc:mysql://localhost:3306/microservices
+    username: root
+    password: 1998
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  
+  config:
+    import: optional:configserver:http://localhost:8086
+    
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true  # ✅ Enables Resilience4j circuit breaker health indicators
+
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # 👈 You can include more if needed (e.g., metrics, beans)
+    info: 
+      env: 
+      enabled: true
+  shutdown:
+    enabled: true
+
+info:
+  application:
+    name: "userservice"
+    description: "This is a user service" 
+    version: "1.0" 
+  endpoint:
+    health:
+      show-details: always           
+      
+resilience4j:
+  circuitbreaker:
+    instances:
+      ratingHotelBreaker:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 5s
+        permittedNumberOfCallsInHalfOpenState: 3
+        slidingWindowType: COUNT_BASED
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+
+  retry:
+    instances:
+      ratingHotelService:
+        max-attempts: 3
+        wait-duration: 5s
+
+server:
+  port: 8085
+  

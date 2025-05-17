@@ -1,0 +1,40 @@
+server:
+  port: 9090
+
+spring:
+  application:
+    name: gateway-service
+
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true
+  info:
+    env:
+      enabled: true
+# cloud:
+#     gateway:
+#       routes:
+#         - id: hotelservice
+#           uri: lb://HOTELSERVICE 
+#           predicates:
+#             - Path=/hotels/** 
+info:
+  application:
+    name: "api-gateway"
+    description: "This is an API Gateway for services"
+    version: "1.0"
+
+
+config:
+  import: optional:configserver:http://localhost:8086
