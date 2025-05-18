@@ -2,9 +2,11 @@ package com.ganesh.HotelService.service;
 
 import java.util.List;
 
+
 import org.springframework.stereotype.Service;
 
 import com.ganesh.HotelService.entity.Hotel;
+
 
 @Service
 public interface HotelService {
